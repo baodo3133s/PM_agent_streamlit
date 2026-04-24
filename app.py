@@ -45,3 +45,9 @@ for msg in st.session_state.history:
     else:
         with st.chat_message("assistant"):
             st.write(msg.content)
+
+# ---------------------------------------------------------
+# Audio Playback (for the latest assistant message)
+# ---------------------------------------------------------
+if "last_audio" in st.session_state:
+    st.audio(st.session_state.last_audio, format="audio/mp3")
