@@ -36,7 +36,8 @@ llm = ChatOpenAI(
 # 2. PDF Loader + Vector Store Builder
 # ============================================================
 
-PDF_FOLDER = r"C:\Users\admin\Downloads\PDF_PM_AGENT"
+PDF_FOLDER = PDF_FOLDER = "pdfs"
+
 
 
 def load_all_pdfs(folder_path: str):
