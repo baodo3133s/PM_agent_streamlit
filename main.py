@@ -36,7 +36,7 @@ llm = ChatOpenAI(
 # 2. PDF Loader + Vector Store Builder
 # ============================================================
 
-PDF_FOLDER = PDF_FOLDER = "pdfs"
+PDF_FOLDER = "pdfs"
 
 
 
