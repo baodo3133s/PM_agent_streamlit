@@ -155,5 +155,46 @@ def run_agent(user_input: str, history: List[BaseMessage]) -> AIMessage:
             content=f"Error: {str(e)}\n\nCheck your PDFs or try rephrasing."
         )
 
+# ============================================================
+# 6. Text‑to‑Speech (gTTS)
+# ============================================================
+
+from gtts import gTTS
+
+def text_to_speech(text: str) -> bytes:
+    """
+    Convert text to speech using gTTS and return raw MP3 bytes.
+    """
+    tts = gTTS(text=text, lang="en")
+    buffer = BytesIO()
+    tts.write_to_fp(buffer)
+    return buffer.getvalue()
+
+# ============================================================
+# 7. Agent Runner (returns BOTH text + audio)
+# ============================================================
+
+def run_agent(user_input: str, history: List[BaseMessage]):
+    """
+    Run a single turn of the agent and return both text and audio bytes.
+    """
+    try:
+        result = agent.invoke(
+            {"messages": history + [HumanMessage(content=user_input)]},
+            config={"recursion_limit": 50}
+        )
+
+        ai_msg = result["messages"][-1]
+        text_output = ai_msg.content
+
+        # Generate speech
+        audio_bytes = text_to_speech(text_output)
+
+        return text_output, audio_bytes
+
+    except Exception as e:
+        error_text = f"Error: {str(e)}\n\nCheck your PDFs or try rephrasing."
+        return error_text, text_to_speech(error_text)
+
 
 
